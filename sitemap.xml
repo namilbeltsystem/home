@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://namilbeltsystem.github.io/home/</loc>
+    <loc>https://namilbeltsystem.github.io/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://namilbeltsystem.github.io/home/about.html</loc>
+    <loc>https://namilbeltsystem.github.io/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://namilbeltsystem.github.io/home/contact.html</loc>
+    <loc>https://namilbeltsystem.github.io/contact.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://namilbeltsystem.github.io/home/belt-systems.html</loc>
+    <loc>https://namilbeltsystem.github.io/belt-systems.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://namilbeltsystem.github.io/home/belt-types.html</loc>
+    <loc>https://namilbeltsystem.github.io/belt-types.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://namilbeltsystem.github.io/home/habasit-catalog.html</loc>
+    <loc>https://namilbeltsystem.github.io/habasit-catalog.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://namilbeltsystem.github.io/home/board.html</loc>
+    <loc>https://namilbeltsystem.github.io/board.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
