@@ -333,10 +333,16 @@ ul { list-style: none; }
   line-height: 1.7;
 }
 
-/* Card with icon */
+/* Card with icon - non-interactive info card */
 .card--icon {
   text-align: center;
   padding: 40px 24px;
+  box-shadow: none;
+  border: 1px solid var(--color-border);
+}
+.card--icon:hover {
+  transform: none;
+  box-shadow: none;
 }
 .card__icon {
   width: 56px;
