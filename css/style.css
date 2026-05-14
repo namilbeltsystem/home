@@ -611,7 +611,7 @@ ul { list-style: none; }
 .page-footer {
   background: var(--color-bg-dark);
   color: rgba(255,255,255,0.7);
-  padding: 56px 0 32px;
+  padding: 56px 0 80px;
   font-size: var(--font-size-sm);
 }
 .footer__grid {
@@ -890,7 +890,6 @@ ul { list-style: none; }
   }
 
   .logo span { display: none; }
-  .page-footer { padding-bottom: 80px; }
   .floating {
     right: 12px;
     bottom: 12px;
