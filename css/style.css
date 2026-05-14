@@ -921,9 +921,9 @@ ul { list-style: none; }
   box-shadow: var(--shadow-lg);
   padding: 24px;
   z-index: 899;
-  display: none;
+  display: none !important;
 }
-.settings-panel.is-open { display: block; }
+.settings-panel.is-open { display: block !important; }
 .settings-panel h3 {
   font-size: var(--font-size-base);
   margin-bottom: 12px;
