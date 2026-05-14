@@ -889,6 +889,8 @@ ul { list-style: none; }
     grid-template-columns: 1fr;
   }
 
+  .logo span { display: none; }
+  .page-footer { padding-bottom: 80px; }
   .floating {
     right: 12px;
     bottom: 12px;
