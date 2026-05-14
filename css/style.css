@@ -911,8 +911,8 @@ ul { list-style: none; }
 /* ===== Settings Panel ===== */
 .settings-panel {
   position: fixed;
-  left: 20px;
-  bottom: 180px;
+  top: 80px;
+  right: 20px;
   width: 300px;
   max-height: 60vh;
   overflow-y: auto;
@@ -977,5 +977,5 @@ ul { list-style: none; }
 }
 
 @media (max-width: 640px) {
-  .settings-panel { left: 12px; bottom: 160px; width: 260px; }
+  .settings-panel { top: 72px; right: 10px; width: 260px; }
 }
