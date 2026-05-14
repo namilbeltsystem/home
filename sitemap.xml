@@ -16,11 +16,6 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://namilbeltsystem.github.io/belt-systems.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://namilbeltsystem.github.io/belt-types.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -29,10 +24,5 @@
     <loc>https://namilbeltsystem.github.io/habasit-catalog.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://namilbeltsystem.github.io/board.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
 </urlset>
