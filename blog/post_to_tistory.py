@@ -65,6 +65,8 @@ def post_drafts():
         print("No drafts to post")
         return
 
+    os.makedirs("blog/archive", exist_ok=True)
+
     posted = []
     for f in sorted(os.listdir(posts_dir)):
         if not f.endswith('.json'):

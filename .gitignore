@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# Config with secrets
+blog/config.json
+
+# Generated posts
+blog/posts/

@@ -133,7 +133,6 @@ if __name__ == "__main__":
     action = sys.argv[1] if len(sys.argv) > 1 else "generate"
 
     if action == "generate":
-        import json
         now = datetime.now()
         posts = generate_weekly_posts()
 

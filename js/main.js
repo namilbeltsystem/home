@@ -66,8 +66,6 @@
     });
   }
 
-  function setupPostModals() {}
-
   // ----
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
