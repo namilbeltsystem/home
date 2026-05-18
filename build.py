@@ -1,0 +1,232 @@
+#!/usr/bin/env python3
+"""남일벨트시스템 웹사이트 빌더 - 공통 템플릿으로 HTML 페이지 생성"""
+
+import json, os, sys
+
+SITE_URL = "https://namilbeltsystem.github.io"
+GA_ID = "G-RKW5E36SZV"
+NAVER_VERIFY = "c41bb3c2d1f3c37a7bf2b12afccdb632f261c4a1"
+
+# Shared across all pages
+HEAD_COMMON = (
+    '<meta charset="UTF-8">\n'
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
+    f'<meta name="naver-site-verification" content="{NAVER_VERIFY}">\n'
+    '{{OG_META}}\n'
+    '{{DESC_META}}\n'
+    '<title>{{TITLE}}</title>\n'
+    '<link rel="canonical" href="{{CANONICAL}}">\n'
+    '<link rel="icon" type="image/x-icon" href="favicon.ico">\n'
+    '<link rel="apple-touch-icon" href="images/logo.png">\n'
+    '<link rel="stylesheet" href="css/style.css">\n'
+    f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>\n'
+    '<script>\n'
+    '  window.dataLayer = window.dataLayer || [];\n'
+    f'  function gtag(){{dataLayer.push(arguments);}}gtag("js",new Date());gtag("config","{GA_ID}");\n'
+    '</script>\n'
+    '{{EXTRA_HEAD}}'
+)
+
+HEADER = (
+    '<header class="page-header">\n'
+    '  <div class="container">\n'
+    '    <a href="index.html" class="logo">\n'
+    '      <img src="images/logo.svg" alt="남일벨트시스템" height="36">\n'
+    '      <span>남일벨트시스템</span>\n'
+    '    </a>\n'
+    '    <nav class="nav" id="nav">\n'
+    '      <ul class="nav__list">\n'
+    '        <li><a href="index.html" class="nav__link{{NAV_HOME}}">홈</a></li>\n'
+    '        <li><a href="about.html" class="nav__link{{NAV_ABOUT}}">회사소개</a></li>\n'
+    '        <li><a href="contact.html" class="nav__link{{NAV_CONTACT}}">상담문의</a></li>\n'
+    '        <li><a href="belt-types.html" class="nav__link{{NAV_BELT}}">벨트 종류 및 시스템</a></li>\n'
+    '        <li><a href="industry-trends.html" class="nav__link{{NAV_TRENDS}}">벨트 산업 동향</a></li>\n'
+    '      </ul>\n'
+    '    </nav>\n'
+    '  </div>\n'
+    '</header>'
+)
+
+FOOTER = (
+    '<footer class="page-footer">\n'
+    '  <div class="container">\n'
+    '    <div class="footer__grid">\n'
+    '      <div class="footer__company">\n'
+    '        <strong>남일벨트시스템</strong>\n'
+    '        <p>대표: 홍종수</p>\n'
+    '        <p>서울시 동대문구 한천로2길 16, 212호(덕암빌딩)</p>\n'
+    '        <p>사업자등록번호: 268-06-02265</p>\n'
+    '      </div>\n'
+    '      <div class="footer__contact">\n'
+    '        <p>전화: <a href="tel:02-6084-7795">02-6084-7795</a></p>\n'
+    '        <p>팩스: (02)6403-9380</p>\n'
+    '        <p>이메일: <a href="mailto:namilsystem@naver.com">namilsystem@naver.com</a></p>\n'
+    '        <p>블로그: <a href="https://blog.naver.com/namilsystem" target="_blank" rel="noopener">blog.naver.com/namilsystem</a></p>\n'
+    '      </div>\n'
+    '    </div>\n'
+    '    <div class="footer__bottom">\n'
+    '      <p>&copy; 2026 남일벨트시스템. All Rights Reserved.</p>\n'
+    '    </div>\n'
+    '  </div>\n'
+    '</footer>'
+)
+
+FLOATING = (
+    '<div class="floating">\n'
+    '  <a href="tel:02-6084-7795" class="floating__btn" title="전화" aria-label="전화">&#128222;</a>\n'
+    '  <a href="mailto:namilsystem@naver.com" class="floating__btn" title="이메일" aria-label="이메일">&#9993;</a>\n'
+    '  <a href="https://blog.naver.com/namilsystem" target="_blank" rel="noopener" class="floating__btn" title="블로그" aria-label="블로그">&#127760;</a>\n'
+    '  <button class="floating__btn floating__btn--top" title="맨 위로" aria-label="맨 위로">&#9650;</button>\n'
+    '</div>'
+)
+
+LIGHTBOX = (
+    '<div class="lightbox" id="lightbox">\n'
+    '  <button class="lightbox__close" aria-label="닫기">&times;</button>\n'
+    '  <img class="lightbox__image" src="" alt="">\n'
+    '</div>'
+)
+
+SCRIPT = '<script src="js/main.js"></script>'
+
+PAGES = {
+    "index": {
+        "file": "index.html",
+        "nav_active": "home",
+        "title": "컨베이어 벨트 전문기업 남일벨트시스템 | 산업용 벨트 솔루션",
+        "description": "경량·고하중·식품·타이밍·모놀리식 컨베이어 벨트 전문. 무료 상담, 맞춤 설계, 현장 설치, 유지보수까지. 지금 문의하세요.",
+        "og_title": "남일벨트시스템 - 최고의 컨베이어 벨트를 제공합니다",
+        "og_image": "images/logo.png",
+        "og_description": "산업용 벨트, 컨베이어 벨트, 컨베이어 시스템",
+        "canonical": f"{SITE_URL}/",
+        "extra_head": (
+            '<script type="application/ld+json">\n'
+            '{\n'
+            '  "@context": "https://schema.org",\n'
+            '  "@type": "LocalBusiness",\n'
+            '  "name": "남일벨트시스템",\n'
+            '  "description": "산업용 컨베이어 벨트 전문기업",\n'
+            f'  "url": "{SITE_URL}/",\n'
+            '  "telephone": "+82-2-6084-7795",\n'
+            '  "email": "namilsystem@naver.com",\n'
+            '  "faxNumber": "+82-2-6403-9380",\n'
+            '  "address": {\n'
+            '    "@type": "PostalAddress",\n'
+            '    "addressLocality": "서울특별시 동대문구",\n'
+            '    "streetAddress": "한천로2길 16, 212호(덕암빌딩)"\n'
+            '  },\n'
+            '  "founder": {\n'
+            '    "@type": "Person",\n'
+            '    "name": "홍종수"\n'
+            '  },\n'
+            '  "taxID": "268-06-02265"\n'
+            '}\n'
+            '</script>'
+        ),
+    },
+    "about": {
+        "file": "about.html",
+        "nav_active": "about",
+        "title": "회사소개 - 컨베이어 벨트 전문기업 | 남일벨트시스템",
+        "description": "남일벨트시스템 회사소개 - 대표 홍종수, 서울 동대문구 소재. 산업용 컨베이어 벨트 설계·설치·유지보수 전문. 전화 02-6084-7795.",
+        "og_title": "회사소개 | 남일벨트시스템",
+        "og_image": "images/about-1.png",
+        "og_description": "산업용 벨트, 컨베이어 벨트, 컨베이어 시스템 전문 기업 남일벨트시스템입니다.",
+        "canonical": f"{SITE_URL}/about.html",
+        "extra_head": "",
+    },
+    "contact": {
+        "file": "contact.html",
+        "nav_active": "contact",
+        "title": "상담문의 - 무료 견적 및 기술 상담 | 남일벨트시스템",
+        "description": "컨베이어 벨트 무료 상담 및 견적 문의. 전화 02-6084-7795, 이메일 namilsystem@naver.com. 맞춤 설계부터 설치까지 신속하게 도와드립니다.",
+        "og_title": "상담문의 | 남일벨트시스템",
+        "og_image": "images/contact-hero.png",
+        "og_description": "산업용 벨트, 컨베이어 벨트 상담 및 문의 - 남일벨트시스템",
+        "canonical": f"{SITE_URL}/contact.html",
+        "extra_head": "",
+    },
+    "belt-types": {
+        "file": "belt-types.html",
+        "nav_active": "belt",
+        "title": "컨베이어 벨트 종류 및 시스템 - 경량·고하중·식품·타이밍 | 남일벨트시스템",
+        "description": "6종 산업용 컨베이어 벨트 소개 - 경량, 고하중, 식품, 프로세싱, 타이밍, 모놀리식 벨트. 용도별 맞춤 추천. 무료 상담 문의.",
+        "og_title": "벨트 종류 | 남일벨트시스템",
+        "og_image": "images/belt-lightweight.png",
+        "og_description": "경량 컨베이어 벨트, 고하중 벨트, 식품 벨트, 타이밍 벨트 등 다양한 산업용 벨트를 소개합니다.",
+        "canonical": f"{SITE_URL}/belt-types.html",
+        "extra_head": "",
+    },
+    "industry-trends": {
+        "file": "industry-trends.html",
+        "nav_active": "trends",
+        "title": "벨트 산업 동향 2025-2030 | 남일벨트시스템",
+        "description": "2025-2030 글로벌 및 국내 컨베이어 벨트 시장 분석. 세계 시장 71억 달러, 국내 6,500억원 규모. 물류·식품·광업·스마트팩토리 동향.",
+        "og_title": "벨트 산업 동향 | 남일벨트시스템",
+        "og_image": "images/logo.png",
+        "og_description": "국내외 컨베이어 벨트 시장 규모, 성장률, 주요 트렌드 분석",
+        "canonical": f"{SITE_URL}/industry-trends.html",
+        "extra_head": "",
+    },
+}
+
+def nav_class(page_key, active):
+    return ' nav__link--active' if page_key == active else ''
+
+def build():
+    """모든 페이지 생성"""
+    built = 0
+    for key, meta in PAGES.items():
+        content_file = f"content/{key}.html"
+        if not os.path.exists(content_file):
+            print(f"SKIP: {content_file} not found")
+            continue
+
+        with open(content_file, encoding="utf-8") as f:
+            body = f.read().strip()
+
+        # Open Graph meta tags
+        og_meta = (
+            '<meta property="og:type" content="website">\n'
+            f'<meta property="og:site_name" content="남일벨트시스템">\n'
+            f'<meta property="og:title" content="{meta["og_title"]}">\n'
+            f'<meta property="og:image" content="{meta["og_image"]}">\n'
+            f'<meta property="og:description" content="{meta["og_description"]}">'
+        )
+
+        desc_meta = f'<meta name="description" content="{meta["description"]}">'
+
+        # Navigation active states
+        active = meta["nav_active"]
+        nav_map = {
+            "{{NAV_HOME}}": nav_class(active, "home"),
+            "{{NAV_ABOUT}}": nav_class(active, "about"),
+            "{{NAV_CONTACT}}": nav_class(active, "contact"),
+            "{{NAV_BELT}}": nav_class(active, "belt"),
+            "{{NAV_TRENDS}}": nav_class(active, "trends"),
+        }
+        header_html = HEADER
+        for marker, cls in nav_map.items():
+            header_html = header_html.replace(marker, cls)
+
+        # Head section
+        head_html = HEAD_COMMON
+        head_html = head_html.replace("{{OG_META}}", og_meta)
+        head_html = head_html.replace("{{DESC_META}}", desc_meta)
+        head_html = head_html.replace("{{TITLE}}", meta["title"])
+        head_html = head_html.replace("{{CANONICAL}}", meta["canonical"])
+        head_html = head_html.replace("{{EXTRA_HEAD}}", meta.get("extra_head", ""))
+
+        # Assemble
+        output = f'<!DOCTYPE html>\n<html lang="ko">\n<head>\n  {head_html}\n</head>\n<body>\n\n{header_html}\n\n<main>\n{body}\n</main>\n\n{FOOTER}\n\n{FLOATING}\n\n{LIGHTBOX}\n\n{SCRIPT}\n</body>\n</html>\n'
+
+        file_path = meta["file"]
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(output)
+        print(f"  OK  {file_path}")
+        built += 1
+
+    print(f"\nBuilt {built} pages.")
+
+if __name__ == "__main__":
+    build()

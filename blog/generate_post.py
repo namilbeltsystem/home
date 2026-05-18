@@ -73,6 +73,42 @@ TEMPLATES = {
              "고객사 생산 라인에 최적화된 맞춤형 컨베이어 시스템을 설계합니다. "
              "벨트 선정부터 레이아웃 설계, 구동부 사양까지 "
              "원스톱으로 제공합니다. 설치 및 시운전, 유지보수까지 책임집니다."),
+            ("컨베이어 벨트 유지보수 서비스",
+             "남일벨트시스템의 유지보수 서비스는 정기 점검과 신속한 A/S로 "
+             "안정적인 설비 가동을 보장합니다. 장력 점검, 트래킹 교정, "
+             "접합부 진단, 풀리·롤러 상태 점검까지 종합 관리하며, "
+             "계절별 무료 점검과 교체 시기 예측 서비스도 제공합니다."),
+        ]
+    },
+    "maintenance": {
+        "title_prefix": "[유지보수]",
+        "topics": [
+            ("컨베이어 벨트 수명 2배로 늘리는 점검 포인트",
+             "장력 점검, 트래킹 확인, 풀리 클리닝, 스크레이퍼 관리, "
+             "이음매 진단의 5가지 핵심 점검만 꾸준히 해도 "
+             "벨트 수명을 최대 2배까지 연장할 수 있습니다. "
+             "남일벨트시스템은 무료 현장 진단으로 도와드립니다."),
+            ("벨트 트래킹 문제, 원인별 해결 방법",
+             "벨트가 한쪽으로 쏠리는 트래킹 불량은 풀리 정렬, 프레임 변형, "
+             "편하중, 벨트 자체 변형, 풀리 오염 등이 주요 원인입니다. "
+             "V가이드 부착으로 근본적인 트래킹 안정성을 확보하세요."),
+            ("여름/겨울 계절별 컨베이어 벨트 관리법",
+             "여름에는 고온으로 벨트가 늘어나고 습기에 취약합니다. "
+             "겨울에는 저온 경화와 결빙, 정전기를 주의해야 합니다. "
+             "계절별 맞춤 점검으로 사계절 내내 안정적인 가동을 유지하세요."),
+        ]
+    },
+    "partner_info": {
+        "title_prefix": "[파트너 소개]",
+        "topics": [
+            ("하바지트(Habasit) - 스위스 70년 벨트 명가",
+             "1946년 스위스에서 설립된 하바지트는 모놀리식 벨트 세계 1위, "
+             "식품 벨트 Top 2, 경량 벨트 Top 3의 글로벌 기업입니다. "
+             "남일벨트시스템은 하바지트 공식 파트너로서 전 제품군을 국내 공급합니다."),
+            ("HabaSYNC 타이밍 벨트의 정밀 이송 기술",
+             "HabaSYNC 타이밍 벨트는 T·AT·HTD 프로파일과 스틸·아라미드 코드를 "
+             "제공하며, 0.1mm 단위의 정밀 포지셔닝이 가능합니다. "
+             "식품·포장·물류·EV 배터리까지 다양한 산업에 적용됩니다."),
         ]
     },
 }
@@ -103,7 +139,7 @@ def generate_post(category=None, topic_index=None):
     # Add image if relevant
     image_html = ""
     if image_key:
-        image_html = f'<p><img src="https://namilbeltsystem.github.io/images/{image_key}.png" alt="{title_text}" style="max-width:100%"/></p>\n'
+        image_html = f'<p><img loading="lazy" src="https://namilbeltsystem.github.io/images/{image_key}.png" alt="{title_text}" style="max-width:100%"/></p>\n'
 
     post_content = f"""<h2>{title_text}</h2>
 {image_html}
@@ -127,6 +163,10 @@ def generate_weekly_posts():
     posts.append(generate_post("industry_news"))
     # Service intro
     posts.append(generate_post("service_intro"))
+    # Maintenance or partner info (alternate weekly)
+    import random
+    extra = random.choice(["maintenance", "partner_info"])
+    posts.append(generate_post(extra))
     return posts
 
 if __name__ == "__main__":
